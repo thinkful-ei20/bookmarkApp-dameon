@@ -1,0 +1,69 @@
+
+initial state:
+{
+    bookmarks:[],
+    addingBookmark:false,
+    searchByRating:false,
+    itemExpanded:false,
+  };
+
+
+adding bookmark state---
+{
+    bookmarks:[],
+    addingBookmark:true,
+    searchByRating:false,
+    itemExpanded:false,
+  };
+
+
+searchByRating state--
+{
+    bookmarks:[],
+    addingBookmark:false,
+    searchByRating:true,
+    itemExpanded:false,
+  };
+
+itemExpanded state--
+{
+    bookmarks:[],
+    addingBookmark:false,
+    searchByRating:false,
+    itemExpanded:true,
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
