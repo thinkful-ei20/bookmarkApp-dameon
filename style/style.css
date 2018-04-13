@@ -1,4 +1,139 @@
-h1 {
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+/* .bookmark-list-items {
+  border: solid black 2px;
+  width : 60%;
+  margin: 5px auto;
+} */
+
+.heading { 
+  height:100px;
+  width: 90%;
+  border: solid black 2px;
+  margin:10px auto;
+ }
+
+.container {
+  border: solid black 2px;
+  width : 60%;
+  margin: 5px auto;
+ 
+}
+
+h3 {
+  font-size:24px;
+}
+.addBookmark , .sortBookmarks {
+  width: 30%;
+  height: 80px;
+  border: solid black 2px;
+  display:inline-block;
+  margin: 0 15px 0 25px;
+  
+}
+
+.buttons {
+  margin:5px auto;
+  width: 80%;
+}
+
+form {
+  border: solid black 2px;
+}
+
+.normal {
+  height : 120px;
+  width : 80%;
+ 
+  margin:8px auto;
+}
+
+.hidden {
+  display:none;
+}
+/* .delete{
+  float:right;
+} */
+
+
+
+
+
+
+
+
+/* button, input[type="text"] {
+  padding: 5px;
+} */
+
+
+/* li {
+  width: 80%;
+} */
+
+
+
+
+
+
+
+
+
+
+/* 
+
+
+
+
+
+button:hover {
+  cursor: pointer;
+}
+
+
+
+
+
+.hidden {
+  display: none;
+}
+
+#bookmark-list-item {
+  width: 250px;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.bookmark-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.bookmark-list > li {
+  margin-bottom: 20px;
+  border: 1px solid grey;
+  padding: 20px;
+}
+
+.bookmark-item {
+  display: block;
+  color: grey;
+  font-style: italic;
+  font-size: 20px;
+  margin-bottom: 15px;
+} */
+
+
+/* h1 {
   color:red;
 }
 form {
@@ -61,7 +196,9 @@ form {
 
 
 
-
+input {
+  margin:3px;
+}
 
 
 
@@ -103,4 +240,4 @@ form {
   .addBookmark , .sortBookmarks {
     margin: 0 20px 0 75px;
   }
-}
+} */

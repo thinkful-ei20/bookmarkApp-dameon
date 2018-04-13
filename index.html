@@ -20,11 +20,34 @@
   
 
 <div class="heading">Box 1 containing header</div>
+<div class="buttons"></div>
 
-<div class="buttons">
-<div class="addBookmark">Button 1</div>
-<div class="sortBookmarks">Button 2</div>
+
+<div>
+  <ul  class ='bookmarks'></ul>
 </div>
+
+<!-- <form class="add-bookmark-form">
+    <label for="bookmark-name">Bookmark name:</label>
+    <input type="text" id="bookmark-title" ><br>
+    <label for="bookmark-url">Bookmark URL:</label>
+    <input type="text" id="bookmark-url"><br>
+    <label for="bookmark-rating">Rate your bookmark:</label>
+    <input type="number" id="rating"><br>
+    <label for="bookmark-description">Bookmark description:</label>
+    <input type="text" id="description"><br>
+    <button type="submit" id="add-bookmark-button" >ADD</button>
+  </form> -->
+
+
+
+<!-- <div class="buttons"> -->
+  
+<!-- <button class="addBookmark">Button 1</button>
+
+
+<div class="sortBookmarks">Button 2</div> -->
+
 
 
 
@@ -43,7 +66,7 @@
 </form> -->
 
 
-
+<!-- 
 <div class="normal"> 
   <div>
     normal Box 1
@@ -55,21 +78,23 @@
     Dynamic Box 1
     <button class="float">collapse</button>
   </div>
-</div>
+</div> -->
 
 
 
 
 
-
-
+<!-- Hacky fix for form submit -->
+<iframe name="frame" style='display:none'></iframe>
  <!-- Link to jQUery -->
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <!-- Scripts -->
-<script  rel="stylesheet"  src='logic/starter.js'></script>
 
+<script  rel="stylesheet"  src='logic/api.js'></script>
+<script  rel="stylesheet"  src='logic/bookmarkList.js'></script>
 <script  rel="stylesheet"  src='logic/store.js'></script>
+<script  rel="stylesheet"  src='logic/index.js'></script>
 </body>
 
 </html>
