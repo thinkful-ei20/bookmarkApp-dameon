@@ -1,4 +1,5 @@
 'use strict';
+/*global store*/
 // eslint-disable-next-line no-unused-vars
 
 
@@ -10,8 +11,15 @@
 
 let api = (function(){
   let URL =  'https://thinkful-list-api.herokuapp.com/dameon/bookmarks';
-  let createItem = function(name, success, error){
-    let newItem = JSON.stringify({'name': name});
+  
+  
+  let getItems = function(callback){
+    $.getJSON(URL,callback);
+  };
+  
+  
+  let createBookmark = function(newBookmark, success, error){
+    let newItem = JSON.stringify(newBookmark);
 
     $.ajax({
       url: URL,
@@ -24,7 +32,10 @@ let api = (function(){
   };
 
 
-
+  return {
+    getItems,
+    createBookmark,
+  };
 
 
 

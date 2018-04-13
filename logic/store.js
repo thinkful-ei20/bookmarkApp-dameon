@@ -9,39 +9,18 @@ let store = (function(){
   let addingBookmark = false;
   let searchingByRating = false;
   let ratingSetting =1;
-  let bookmarks = [{
-    title:'Dameon',
-    description:'Some sort of string',
-    rating: 2,
-    link: 'http://www.google.com',
-    expanded:false,
-  },{
-    title:'Dameon',
-    description:'Some sort of string',
-    rating: 4,
-    link: 'http://www.google.com',
-    expanded:false,
-  },{
-    title:'Dameon',
-    description:'Some sort of string',
-    rating: 5,
-    link: 'http://www.google.com',
-    expanded:false,
-  },
-  {
-    title:'Dameon',
-    description:'Some sort of string',
-    rating: 3,
-    link: 'http://www.google.com',
-    expanded:false,
-  }];
-  let createBookmark = function(title,description,rating,link){
+  let bookmarks = [];
+  let addItem = function(item) {
+    this.bookmarks.push(item);
+  };
+
+  let createBookmark = function(title,desc,rating,url){
     return {
       title,
-      description,
+      desc,
       rating,
-      link,
-      expanded:false
+      url,
+      //expanded:false
     };
   };
 
@@ -53,7 +32,7 @@ let store = (function(){
     addingBookmark,
     searchingByRating,
     ratingSetting,
-   
+    addItem,
     
     createBookmark,
     // editDesciption,

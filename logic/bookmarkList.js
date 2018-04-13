@@ -1,5 +1,5 @@
 'use strict';
-/*global store */
+/*global store api*/
 // eslint-disable-next-line no-unused-vars
 let bookmarkList = (function(){
 
@@ -38,9 +38,9 @@ let bookmarkList = (function(){
         </div> 
         <div class ='expandedInfo hidden'>
           <form id="editBookmarkDescription">
-            <input type="text" id="editBookmarkInput" value="${bookmark.description}" />
+            <input type="text" id="editBookmarkInput" value="${bookmark.desc}" />
           </form>
-         <a href =${bookmark.link} target = 'blank'>${bookmark.link}</a> 
+         <a href =${bookmark.url} target = 'blank'>${bookmark.url}</a> 
         </div>    
       </li>
     
@@ -55,6 +55,7 @@ let bookmarkList = (function(){
 
   let buttonString = `<button class="addBookmark">Add to Bookmarks</button>
   <select id ='ratingSort' class='sortBookmarks' >
+      <option value="">Sort by Rating</option>
       <option value="1">Minimum rating : 1</option>
       <option value="2">Minimum rating : 2</option>
       <option value="3">Minimum rating : 3</option>
@@ -69,11 +70,11 @@ let bookmarkList = (function(){
   let ratingToSearchFor = function(){
     $('.buttons').on('change', '#ratingSort', function(){
       let ratingValue =  $('#ratingSort').val();
-      store.rating = ratingValue;
+      store.ratingSetting = parseInt(ratingValue);
       let bookmarks =  store.bookmarks.filter(function(item){
-        return item.rating >= ratingValue;
+        return item.rating >= parseInt(ratingValue);
       });
-      ///console.log(ratingValue);
+      console.log(ratingValue);
       render(bookmarks);
     });
   };
@@ -167,9 +168,15 @@ let bookmarkList = (function(){
       let bookmarkLink = $('#bookmark-url').val();
       let bookmarkRating = $('#rating').val();
       let bookmarkDescription = $('#description').val();
-      store.bookmarks.push(store.createBookmark(bookmarkTitle,bookmarkDescription,bookmarkRating,bookmarkLink));
+      let newBookmark = store.createBookmark(bookmarkTitle,bookmarkDescription,bookmarkRating,bookmarkLink);
+      console.log(newBookmark);
+      api.createBookmark(newBookmark,function(newItem){
+        store.addItem(newItem);
+        render(store.bookmarks);
+      });
+      //store.bookmarks.push(store.createBookmark(bookmarkTitle,bookmarkDescription,bookmarkRating,bookmarkLink));
       store.addingBookmark=false;
-      render(store.bookmarks);
+      //render(store.bookmarks);
       console.log(bookmarkDescription);
     });
   };
