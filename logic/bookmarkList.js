@@ -25,21 +25,22 @@ let bookmarkList = (function(){
       <li data-item-id="${bookmark.title}">         
         <h3 class="js-title">${bookmark.title} </h3> 
         <div class = 'rating'>
-       <p>${bookmark.rating}</p>
-        <select id ='reassignValue'  >
-        <option value="1">Reassign rating : 1</option>
-        <option value="2">Reassign rating : 2</option>
-        <option value="3">Reassign rating : 3</option>
-        <option value="4">Reassign rating : 4</option>
-        <option value="5">Reassign rating : 5</option>
-        </select>
-        <button class = 'deleteButton' type='button'>Delete</button>
-        <button class = 'expandButton' type='button'>More Info</button>
+          <p>${bookmark.rating}</p>
+          <select id ='reassignValue'  >
+          <option value="1">Reassign rating : 1</option>
+          <option value="2">Reassign rating : 2</option>
+          <option value="3">Reassign rating : 3</option>
+          <option value="4">Reassign rating : 4</option>
+          <option value="5">Reassign rating : 5</option>
+          </select>
+          <button class = 'deleteButton' type='button'>Delete</button>
+          <button class = 'expandButton' type='button'>More Info</button>
         </div> 
         <div class ='expandedInfo hidden'>
-        <input type="text" id='bookmark-description' value =${bookmark.description}>
-         <br> 
-        <a href =${bookmark.link} target = 'blank'>${bookmark.link}</a> 
+          <form id="editBookmarkDescription">
+            <input type="text" id="editBookmarkInput" value="${bookmark.description}" />
+          </form>
+         <a href =${bookmark.link} target = 'blank'>${bookmark.link}</a> 
         </div>    
       </li>
     
@@ -78,6 +79,7 @@ let bookmarkList = (function(){
   };
 
   
+ 
   let changeCurrentRating = function(){
     $('.bookmarks').on('change', '#reassignValue', function(){
       let ratingValue =  $('#reassignValue').val();
@@ -102,8 +104,20 @@ let bookmarkList = (function(){
 
 
 
+  let editBookmarkDescription = function(){
+    $('.bookmarks').on('submit','#editBookmarkDescription',function(event){
+      event.preventDefault();
+      let bookmarkToChange = $(this).closest('.container').find('li').attr('data-item-id');
+      let indexOfBookmark = findIndexOfElement(bookmarkToChange);
+      store.bookmarks[indexOfBookmark].description = "newString";
 
 
+
+
+      console.log($(this).closest('.container').find('#editBookmarkInput').val());
+      console.log('working');
+    });
+  };
 
 
 
@@ -192,6 +206,7 @@ let bookmarkList = (function(){
 
 
   function bindEventHandlers(){
+    editBookmarkDescription();
     changeCurrentRating();
     ratingToSearchFor();
     deleteBookmark();
