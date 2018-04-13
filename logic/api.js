@@ -35,9 +35,19 @@ let api = (function(){
 
   };
 
+  let deleteBookmark = function(id,callback){
+    $.ajax({ 
+      url: `${URL}/${id}`,
+      method: 'DELETE',
+      success: callback
+    });
+  };
+
+
   return {
     getItems,
     createBookmark,
     updateBookmark,
+    deleteBookmark,
   };
 }());

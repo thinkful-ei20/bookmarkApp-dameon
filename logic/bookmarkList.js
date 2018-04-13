@@ -172,12 +172,16 @@ let bookmarkList = (function(){
   let deleteBookmark = function(){
     $('.bookmarks').on('click','.deleteButton',function(){
       let itemToDelete = $(this).closest('.container').find('li').attr('data-item-id');
-      let indexOfBookmark = findIndexOfElement(itemToDelete);
-      store.bookmarks.splice(indexOfBookmark,1);
-      render(store.bookmarks);
+      api.deleteBookmark(itemToDelete,function(){
+        store.bookmarks = [];
+        api.getItems((items) => {
+          items.forEach((item) => store.addItem(item));
+          bookmarkList.render(store.bookmarks);
+        });   
+     
+      });
     });
   };
-
   function bindEventHandlers(){
     editBookmarkDescription();
     changeCurrentRating();
