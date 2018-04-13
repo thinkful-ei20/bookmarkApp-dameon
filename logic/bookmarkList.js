@@ -78,38 +78,18 @@ let bookmarkList = (function(){
  
   let changeCurrentRating = function(){
     $('.bookmarks').on('change', '#reassignValue', function(){
-      //let ratingValue = $('#reassignValue').val();
-      // let bookmarks =  store.bookmarks.filter(function(item){
-      //   return item.rating >= ratingValue;
-      // });
-      let ratingValue = $(this).closest('.container').find('#reassignValue').val()
-      console.log(ratingValue);
+      let ratingValue = $(this).closest('.container').find('#reassignValue').val();
       let newData = {
         rating:ratingValue,
       };
-     //console.log(bookmarkToChange);
-     let bookmarkToChange = $(this).closest('.container').find('li').attr('data-item-id');
-      //let indexOfBookmark = findIndexOfElement(bookmarkToChange);
-      // store.bookmarks[indexOfBookmark].rating = ratingValue;
-      console.log(bookmarkToChange);
-     api.updateBookmark(bookmarkToChange,newData,function(success){
-        console.log(bookmarkToChange);
-        // let bookmarks =  store.bookmarks.filter(function(item){
-        //   return item.rating >= store.ratingSetting;
-        // });
+      let bookmarkToChange = $(this).closest('.container').find('li').attr('data-item-id');
+      api.updateBookmark(bookmarkToChange,newData,function(){
         store.bookmarks = [];
         api.getItems((items) => {
           items.forEach((item) => store.addItem(item));
           bookmarkList.render(store.bookmarks);
         });
-        //render(bookmarks);
-     
-        
       });
-
-      
-
-
     });
   };
 
@@ -117,14 +97,19 @@ let bookmarkList = (function(){
     $('.bookmarks').on('submit','#editBookmarkDescription',function(event){
       event.preventDefault();
       let bookmarkToChange = $(this).closest('.container').find('li').attr('data-item-id');
-      let indexOfBookmark = findIndexOfElement(bookmarkToChange);
-      store.bookmarks[indexOfBookmark].description = 'newString';
-
-
-
-
-      console.log($(this).closest('.container').find('#editBookmarkInput').val());
-      console.log('working');
+      //let indexOfBookmark = findIndexOfElement(bookmarkToChange);
+      //store.bookmarks[indexOfBookmark].description = 'newString';
+      let newDesc = $(this).closest('.container').find('#editBookmarkInput').val();
+      let newData = {
+        desc:newDesc
+      };
+      api.updateBookmark(bookmarkToChange,newData,function(){
+        store.bookmarks = [];
+        api.getItems((items) => {
+          items.forEach((item) => store.addItem(item));
+          bookmarkList.render(store.bookmarks);
+        });
+      });
     });
   };
   
