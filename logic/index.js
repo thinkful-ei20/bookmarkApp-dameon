@@ -6,7 +6,7 @@ $(document).ready(function() {
   console.log(store);
   
   
-  bookmarkList.render();
+  bookmarkList.render(store.bookmarks);
   bookmarkList.bindEventHandlers();
 
 

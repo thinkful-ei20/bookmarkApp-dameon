@@ -3,7 +3,7 @@
 // eslint-disable-next-line no-unused-vars
 let bookmarkList = (function(){
 
-  
+  //let bookmarksArray = store.bookmarks;
 
   let generateFormElement = function(){
     return ` <form role='form' class="add-bookmark-form"  >
@@ -25,11 +25,20 @@ let bookmarkList = (function(){
       <li data-item-id="${bookmark.title}">         
         <h3 class="js-title">${bookmark.title} </h3> 
         <div class = 'rating'>
-        ${bookmark.rating}<br>
+       <p>${bookmark.rating}</p>
+        <select id ='reassignValue'  >
+        <option value="1">Reassign rating : 1</option>
+        <option value="2">Reassign rating : 2</option>
+        <option value="3">Reassign rating : 3</option>
+        <option value="4">Reassign rating : 4</option>
+        <option value="5">Reassign rating : 5</option>
+        </select>
         <button class = 'deleteButton' type='button'>Delete</button>
+        <button class = 'expandButton' type='button'>More Info</button>
         </div> 
         <div class ='expandedInfo hidden'>
-        ${bookmark.description} <br> 
+        <input type="text" id='bookmark-description' value =${bookmark.description}>
+         <br> 
         <a href =${bookmark.link} target = 'blank'>${bookmark.link}</a> 
         </div>    
       </li>
@@ -57,20 +66,66 @@ let bookmarkList = (function(){
 
 
   let ratingToSearchFor = function(){
-    $('select').on('change', function(){
-      console.log($('#ratingSort').val());
+    $('.buttons').on('change', '#ratingSort', function(){
+      let ratingValue =  $('#ratingSort').val();
+      store.rating = ratingValue;
+      let bookmarks =  store.bookmarks.filter(function(item){
+        return item.rating >= ratingValue;
+      });
+      ///console.log(ratingValue);
+      render(bookmarks);
     });
   };
-  // $('.buttons').on('select'){ // on submit button click
 
-  //     var urldata = $('#dropDownId :selected').val(); // get the selected  option value
-  //     window.open("http://"+urldata+".html") // open a new window. here you need to change the url according to your wish.
-  // });
+  
+  let changeCurrentRating = function(){
+    $('.bookmarks').on('change', '#reassignValue', function(){
+      let ratingValue =  $('#reassignValue').val();
+      // let bookmarks =  store.bookmarks.filter(function(item){
+      //   return item.rating >= ratingValue;
+      // });
+      console.log(ratingValue);
+     
+      let bookmarkToChange = $(this).closest('.container').find('li').attr('data-item-id');
+      let indexOfBookmark = findIndexOfElement(bookmarkToChange);
+      store.bookmarks[indexOfBookmark].rating = ratingValue;
+      let bookmarks =  store.bookmarks.filter(function(item){
+        return item.rating >= store.ratingSetting;
+        
+      });
 
-  // <button class="sortBookmarks">Button 1</button>';
+      render(bookmarks);
 
-  let render = function(){
-    let bookmarks = store.bookmarks;
+
+    });
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  let render = function(bookmarks){
+    
     let bookmarkString = generateBookmarkString(bookmarks);
     //if(this.item is expanded){};
 
@@ -87,7 +142,7 @@ let bookmarkList = (function(){
     $('.buttons').on('click','.addBookmark',function(){
       console.log('hi');
       store.addingBookmark = true;
-      render();
+      render(store.bookmarks);
     });
   };
 
@@ -100,13 +155,13 @@ let bookmarkList = (function(){
       let bookmarkDescription = $('#description').val();
       store.bookmarks.push(store.createBookmark(bookmarkTitle,bookmarkDescription,bookmarkRating,bookmarkLink));
       store.addingBookmark=false;
-      render();
+      render(store.bookmarks);
       console.log(bookmarkDescription);
     });
   };
 
   let expandElementHandler = function(){
-    $('.bookmarks').on('click','.container',function(){
+    $('.bookmarks').on('click','.expandButton',function(){
     
       
       $(this).closest('.container').find('.expandedInfo').toggleClass('hidden');
@@ -125,7 +180,7 @@ let bookmarkList = (function(){
       let itemToDelete = $(this).closest('.container').find('li').attr('data-item-id');
       let indexOfBookmark = findIndexOfElement(itemToDelete);
       store.bookmarks.splice(indexOfBookmark,1);
-      render();
+      render(store.bookmarks);
     });
   };
 
@@ -137,6 +192,7 @@ let bookmarkList = (function(){
 
 
   function bindEventHandlers(){
+    changeCurrentRating();
     ratingToSearchFor();
     deleteBookmark();
     expandElementHandler();
