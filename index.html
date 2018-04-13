@@ -1,100 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <!-- meta data -->
-  <link rel="stylesheet" type="text/css" href="style/reset.css">
-  <link rel="stylesheet" type="text/css" href="style/style.css">
-  <meta name="description" content="Bookmarks application">
- 
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- meta data -->
+    <link rel="stylesheet" type="text/css" href="style/reset.css">
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+    <meta name="description" content="Bookmarks application">
+  </head>
   
-
-
-
-
-</head>
-<body>
-  
-
-<div class="heading">Box 1 containing header</div>
-<div class="buttons"></div>
-
-
-<div>
-  <ul  class ='bookmarks'></ul>
-</div>
-
-<!-- <form class="add-bookmark-form">
-    <label for="bookmark-name">Bookmark name:</label>
-    <input type="text" id="bookmark-title" ><br>
-    <label for="bookmark-url">Bookmark URL:</label>
-    <input type="text" id="bookmark-url"><br>
-    <label for="bookmark-rating">Rate your bookmark:</label>
-    <input type="number" id="rating"><br>
-    <label for="bookmark-description">Bookmark description:</label>
-    <input type="text" id="description"><br>
-    <button type="submit" id="add-bookmark-button" >ADD</button>
-  </form> -->
-
-
-
-<!-- <div class="buttons"> -->
-  
-<!-- <button class="addBookmark">Button 1</button>
-
-
-<div class="sortBookmarks">Button 2</div> -->
-
-
-
-
-
-<!-- <form> 
-  <button class= "addBookmark">ADD Button</button>
-  
-  <button class= "sortBookmarks">
-  <select id = "myList">
-    <option value = "1">one</option>
-    <option value = "2">two</option>
-    <option value = "3">three</option>
-    <option value = "4">four</option>
-  </select>
-</button>
-</form> -->
-
-
-<!-- 
-<div class="normal"> 
-  <div>
-    normal Box 1
-    <button class="float">expand</button>
+  <body>
+  <div class="heading">
+    <h1>
+      Bookmark links
+    </h1>
   </div>
-</div>
-<div class="expanded"> 
-  <div>
-    Dynamic Box 1
-    <button class="float">collapse</button>
+  <div class="buttons"></div>
+  <div role="main">
+    <ul class ='bookmarks'></ul>
   </div>
-</div> -->
 
 
-
-
-
-<!-- Hacky fix for form submit -->
-<iframe name="frame" style='display:none'></iframe>
- <!-- Link to jQUery -->
- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<!-- Scripts -->
-
-<script  rel="stylesheet"  src='logic/api.js'></script>
-<script  rel="stylesheet"  src='logic/bookmarkList.js'></script>
-<script  rel="stylesheet"  src='logic/store.js'></script>
-<script  rel="stylesheet"  src='logic/index.js'></script>
+  <!-- Link to jQUery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- Scripts -->
+  <script  rel="stylesheet"  src='logic/api.js'></script>
+  <script  rel="stylesheet"  src='logic/bookmarkList.js'></script>
+  <script  rel="stylesheet"  src='logic/store.js'></script>
+  <script  rel="stylesheet"  src='logic/index.js'></script>
 </body>
 
 </html>

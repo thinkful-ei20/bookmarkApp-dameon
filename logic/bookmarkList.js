@@ -23,7 +23,7 @@ let bookmarkList = (function(){
       <li data-item-id="${bookmark.id}">         
         <h3 class="js-title">${bookmark.title} </h3> 
         <div class = 'rating'>
-          <p>${bookmark.rating}</p>
+          <p>Your Rating : ${bookmark.rating}</p>
           <select id ='reassignValue' >
           <option value="">Reassign rating</option>
           <option value="1">Reassign rating : 1</option>
