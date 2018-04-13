@@ -1,18 +1,9 @@
 'use strict';
 /*global store*/
 // eslint-disable-next-line no-unused-vars
-
-
-
-
-
-
-
-
 let api = (function(){
   let URL =  'https://thinkful-list-api.herokuapp.com/dameon/bookmarks';
-  
-  
+    
   let getItems = function(callback){
     $.getJSON(URL,callback);
   };
@@ -31,25 +22,22 @@ let api = (function(){
     }); 
   };
 
+  let updateBookmark = function(id,updateData,callback){
+    let newData = JSON.stringify(updateData);
+    $.ajax({
+      url: `${URL}/${id}`,
+      method: 'PATCH',
+      contentType: 'application/json',
+      data: newData,
+      success: callback,
+      //error: error,
+    }); 
+
+  };
 
   return {
     getItems,
     createBookmark,
+    updateBookmark,
   };
-
-
-
-
-
 }());
-
-
-
-
-
-
-
-
-
-
-

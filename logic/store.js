@@ -1,9 +1,5 @@
 'use strict';
 
-
-
-
-
 // eslint-disable-next-line no-unused-vars
 let store = (function(){
   let addingBookmark = false;
@@ -23,10 +19,6 @@ let store = (function(){
       //expanded:false
     };
   };
-
-  
-
-
   return {
     bookmarks,
     addingBookmark,
@@ -35,50 +27,5 @@ let store = (function(){
     addItem,
     
     createBookmark,
-    // editDesciption,
-    // editRating,
-    // removeBookmark,
-    // changeDescription:false,
-    // changeRating:false,
   };
 }());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // let populateBookmarkArray = function(items){
-  //   this.bookmarks = items;
- // };
-// let createBookmark = function(title,description,rating,link){
-//     return {
-//       id: cuid(),
-//       title,
-//       description,
-//       rating,
-//       link,
-//     };
-//   };
- 
-  // let editDesciption = function(item){};
-  // let editRating = function (item){};
-  // let removeBookmark = function(item){};

@@ -2,9 +2,7 @@
 /*global store api*/
 // eslint-disable-next-line no-unused-vars
 let bookmarkList = (function(){
-
-  //let bookmarksArray = store.bookmarks;
-
+ 
   let generateFormElement = function(){
     return ` <form role='form' class="add-bookmark-form"  >
        <label for="bookmark-name">Bookmark name:</label>
@@ -22,11 +20,12 @@ let bookmarkList = (function(){
   let generateBookmarkElement = function(bookmark){
     return `  
     <div class = 'container'>
-      <li data-item-id="${bookmark.title}">         
+      <li data-item-id="${bookmark.id}">         
         <h3 class="js-title">${bookmark.title} </h3> 
         <div class = 'rating'>
           <p>${bookmark.rating}</p>
-          <select id ='reassignValue'  >
+          <select id ='reassignValue' >
+          <option value="">Reassign rating</option>
           <option value="1">Reassign rating : 1</option>
           <option value="2">Reassign rating : 2</option>
           <option value="3">Reassign rating : 3</option>
@@ -53,7 +52,8 @@ let bookmarkList = (function(){
     return items.join('');
   }
 
-  let buttonString = `<button class="addBookmark">Add to Bookmarks</button>
+  let buttonString = function(){
+    return `<button class="addBookmark">Add to Bookmarks</button>
   <select id ='ratingSort' class='sortBookmarks' >
       <option value="">Sort by Rating</option>
       <option value="1">Minimum rating : 1</option>
@@ -62,10 +62,7 @@ let bookmarkList = (function(){
       <option value="4">Minimum rating : 4</option>
       <option value="5">Minimum rating : 5</option>
       </select>
- 
- 
-</div>`;
-
+      </div>`;};
 
   let ratingToSearchFor = function(){
     $('.buttons').on('change', '#ratingSort', function(){
@@ -78,39 +75,50 @@ let bookmarkList = (function(){
       render(bookmarks);
     });
   };
-
-  
  
   let changeCurrentRating = function(){
     $('.bookmarks').on('change', '#reassignValue', function(){
-      let ratingValue =  $('#reassignValue').val();
+      //let ratingValue = $('#reassignValue').val();
       // let bookmarks =  store.bookmarks.filter(function(item){
       //   return item.rating >= ratingValue;
       // });
+      let ratingValue = $(this).closest('.container').find('#reassignValue').val()
       console.log(ratingValue);
+      let newData = {
+        rating:ratingValue,
+      };
+     //console.log(bookmarkToChange);
+     let bookmarkToChange = $(this).closest('.container').find('li').attr('data-item-id');
+      //let indexOfBookmark = findIndexOfElement(bookmarkToChange);
+      // store.bookmarks[indexOfBookmark].rating = ratingValue;
+      console.log(bookmarkToChange);
+     api.updateBookmark(bookmarkToChange,newData,function(success){
+        console.log(bookmarkToChange);
+        // let bookmarks =  store.bookmarks.filter(function(item){
+        //   return item.rating >= store.ratingSetting;
+        // });
+        store.bookmarks = [];
+        api.getItems((items) => {
+          items.forEach((item) => store.addItem(item));
+          bookmarkList.render(store.bookmarks);
+        });
+        //render(bookmarks);
      
-      let bookmarkToChange = $(this).closest('.container').find('li').attr('data-item-id');
-      let indexOfBookmark = findIndexOfElement(bookmarkToChange);
-      store.bookmarks[indexOfBookmark].rating = ratingValue;
-      let bookmarks =  store.bookmarks.filter(function(item){
-        return item.rating >= store.ratingSetting;
         
       });
 
-      render(bookmarks);
+      
 
 
     });
   };
-
-
 
   let editBookmarkDescription = function(){
     $('.bookmarks').on('submit','#editBookmarkDescription',function(event){
       event.preventDefault();
       let bookmarkToChange = $(this).closest('.container').find('li').attr('data-item-id');
       let indexOfBookmark = findIndexOfElement(bookmarkToChange);
-      store.bookmarks[indexOfBookmark].description = "newString";
+      store.bookmarks[indexOfBookmark].description = 'newString';
 
 
 
@@ -119,25 +127,6 @@ let bookmarkList = (function(){
       console.log('working');
     });
   };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
   
   let render = function(bookmarks){
     
@@ -195,7 +184,6 @@ let bookmarkList = (function(){
     return store.bookmarks.map(item => item.title).indexOf(title); 
   };
 
-
   let deleteBookmark = function(){
     $('.bookmarks').on('click','.deleteButton',function(){
       let itemToDelete = $(this).closest('.container').find('li').attr('data-item-id');
@@ -204,13 +192,6 @@ let bookmarkList = (function(){
       render(store.bookmarks);
     });
   };
-
-  $('.sortByRating').on('click',function(){
-  //opens a dropdown
-  //renders new page base on choice
-  });
-
-
 
   function bindEventHandlers(){
     editBookmarkDescription();
@@ -222,15 +203,6 @@ let bookmarkList = (function(){
     formSubmitHandler();
   }
 
-
-
-
-
-
-
-
-
-
   return {
     bindEventHandlers,
     render,
@@ -238,110 +210,3 @@ let bookmarkList = (function(){
   };
 
 }());
-
-
-
-
-
-
-{/* <div class="${item.collapsed ? 'hidden' : ''}">               
-<p>${item.desc}</p>
-<a href="${item.url}" target="_blank"><button>Go to site</button></a>
-<button class="js-delete-button">DELETE</button>
-</div>
-</li>
-`;
-<li class="bookmark-item " data-item-id="${bookmark.name}"> */}
-//<h3>${bookmark.title}</h3>
-
-
-
-
-
-//$('.bookmarks').html(store.bookmarks.map(bookmarkString(bookmark))
-//};
-
-
-
-
-// let html = ''; //generateBookmarkString(bookmarks);
-//   store.bookmarks.forEach((bookmark) => html += bookmarks.generateBookmarkDOMelement(bookmark));
-//   $('#display-bookmarks').html(html);
-// let addBookmark = function(title,description,rating,link){
-//   return {
-//     title,
-//     description,
-//     rating,
-//     link,
-//   };
-// };
-
-
-
-
-
-
-
-
-// let buttonString = '<button class="addBookmark">Button 1</button>';
-
-// let formToAddBookmark = `
-// <form class="add-bookmark-form">
-//   <label for="bookmark-name">Bookmark name:</label>
-//   <input type="text" id="bookmark-title" ><br>
-//   <label for="bookmark-url">Bookmark URL:</label>
-//   <input type="text" id="bookmark-url"><br>
-//   <label for="bookmark-rating">Rate your bookmark:</label>
-//   <input type="number" id="rating"><br>
-//   <label for="bookmark-description">Bookmark description:</label>
-//   <input type="text" id="description"><br>
-//   <button type="submit" id="add-bookmark-button" >ADD</button>
-// </form>`;
-
-
-// // let renderButtons = function(){
-// //   $('.buttons').html(buttonString);
-// // };
-
-// // let renderNewForm = function(){
-// //   $('.buttons').html(newFormToAdd);
-// // };
-
-
-// function addBookmarkButton(){ 
-//   $('.buttons').on('click','.addBookmark',function(){
-//   //render a form  
-//     //renderNewForm (); 
-//     console.log('Hello World2');
-//   });
-// }
-
-
-
-
-// // function newBookmarkSubmit(){
-// //   $('#add-bookmark-form').on('submit',function(event){
-// //     event.preventDefault();
-// //     //$('.buttons').html('hello world');
-// //     console.log('Hello World3');
-// //   });
-// // }
-
-
-
-
-
-
-
-
-
-// $('.sortByRating').on('click',function(){
-//   //opens a dropdown
-//   //renders new page base on choice
-// });
-// function bindEventHandlers(){
-//   addBookmarkButton();
-//   newBookmarkSubmit();
-// }
-
-
