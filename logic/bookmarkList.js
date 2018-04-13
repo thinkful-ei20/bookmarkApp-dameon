@@ -6,13 +6,13 @@ let bookmarkList = (function(){
   let generateFormElement = function(){
     return ` <form role='form' class="add-bookmark-form"  >
        <label for="bookmark-name">Bookmark name:</label>
-       <input type="text" id="bookmark-title" required><br>
+       <input type="text" id="bookmark-title" aria-labelledby='bookmark-name' required><br>
       <label for="bookmark-url">Bookmark URL:</label>
-      <input type="text" id="bookmark-url" required><br>
+      <input type="text" id="bookmark-url" aria-labelledby='bookmark-url' required><br>
        <label for="bookmark-rating">Rate your bookmark:</label>
-      <input type="number" id="rating" min="1" max="5"required><br>
+      <input type="number" id="rating" min="1" max="5" aria-labelledby='bookmark-rating' required><br>
        <label for="bookmark-description">Bookmark description:</label>
-       <input type="text" id="description" required><br>
+       <input type="text" id="description" aria-labelledby='bookmark-description' required><br>
        <button type="submit" id="add-bookmark-button" >ADD</button>
      </form>`;
   };
@@ -21,10 +21,11 @@ let bookmarkList = (function(){
     return `  
     <div class = 'container'>
       <li data-item-id="${bookmark.id}">         
-        <h3 class="js-title">${bookmark.title} </h3> 
+        <h2 class="js-title">${bookmark.title} </h2> 
         <div class = 'rating'>
           <p>Your Rating : ${bookmark.rating}</p>
-          <select id ='reassignValue' >
+          <select id ='reassignValue'aria-label='reassignValue' >
+          <label title='change rating' aria-label='reassignValue'></label>
           <option value="">Reassign rating</option>
           <option value="1">Reassign rating : 1</option>
           <option value="2">Reassign rating : 2</option>
@@ -53,8 +54,8 @@ let bookmarkList = (function(){
   }
 
   let buttonString = function(){
-    return `<button class="addBookmark">Add to Bookmarks</button>
-  <select id ='ratingSort' class='sortBookmarks' >
+    return `<button class="addBookmark" id="sortBookmarks">Add to Bookmarks</button>
+      <select id ='ratingSort' class='sortBookmarks' aria-labelledby='sortBookmarks'>
       <option value="">Sort by Rating</option>
       <option value="1">Minimum rating : 1</option>
       <option value="2">Minimum rating : 2</option>
