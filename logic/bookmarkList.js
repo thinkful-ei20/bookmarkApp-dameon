@@ -30,7 +30,7 @@ let bookmarkList = (function(){
         <h2 class="js-title">${bookmark.title} </h2> 
         <div class = 'rating'>
           <p>Your Rating : ${bookmark.rating}</p>
-          <select id ='reassignValue'aria-label='reassignValue' >
+          <select  class= 'reassignRating' id ='${bookmark.id}' aria-label='reassignValue' >
           <label title='change rating' aria-label='reassignValue'></label>
           <option value="">Reassign rating</option>
           <option value="1">Reassign rating : 1</option>
@@ -43,10 +43,10 @@ let bookmarkList = (function(){
           <button class = 'expandButton' type='button'>More Info</button>
         </div> 
         <div class ='expandedInfo hidden'>
-          <form id="editBookmarkDescription" role='textbox'>
+          <form class="editBookmarkDescription" role='textbox'>
             
-            <label for='editBookmarkInput'>Edit Description</label>
-            <textarea rows='3' col='auto' type="text" id="editBookmarkInput" placeholder="${bookmark.desc}" required minlength='1' " />
+            <label for='editBookmarkDescription'>Edit Description</label>
+            <textarea rows='3' col='auto' type="text" class="editBookmarkInput" aria-label="editBookmarkDescription" placeholder="${bookmark.desc}" required minlength='1' " />
             
             <button type='submit'>Change Description</button>
           </form><br><br><br><br>
@@ -67,16 +67,19 @@ let bookmarkList = (function(){
   }
 
   let buttonString = function(){
-    return `<button class="addBookmark" id="sortBookmarks">Add to Bookmarks</button>
-      <select id ='ratingSort' class='sortBookmarks' aria-labelledby='sortBookmarks'>
-      <option value="">Filter by Rating</option>
-      <option value="1">Minimum rating : 1</option>
-      <option value="2">Minimum rating : 2</option>
-      <option value="3">Minimum rating : 3</option>
-      <option value="4">Minimum rating : 4</option>
-      <option value="5">Minimum rating : 5</option>
+    return `
+      
+      <button class="addBookmark" id="addBookmark">Add to Bookmarks</button>
+      
+      <select id ='ratingFilter' class='sortBookmarks' aria-labelledby='ratingFilter'>
+        <option value="">Filter by Rating</option>
+        <option value="1">Minimum rating : 1</option>
+        <option value="2">Minimum rating : 2</option>
+        <option value="3">Minimum rating : 3</option>
+        <option value="4">Minimum rating : 4</option>
+        <option value="5">Minimum rating : 5</option>
       </select>
-      </div>`;};
+      `;};
 
   function errorLogging(jqXHR, status, err) {
     console.log(jqXHR.responseJSON.message);
@@ -86,8 +89,10 @@ let bookmarkList = (function(){
   }
 
   let ratingToSearchFor = function(){
-    $('.buttons').on('change', '#ratingSort', function(){
-      let ratingValue =  $('#ratingSort').val();
+    $('.buttons').on('change', '#ratingFilter', function(){
+      
+      
+      let ratingValue =  $('#ratingFilter').val();
       store.ratingSetting = parseInt(ratingValue);
       let bookmarks =  store.bookmarks.filter(function(item){
         return item.rating >= parseInt(ratingValue);
@@ -98,8 +103,8 @@ let bookmarkList = (function(){
   };
  
   let changeCurrentRating = function(){
-    $('.bookmarks').on('change', '#reassignValue', function(){
-      let ratingValue = $(this).closest('.container').find('#reassignValue').val();
+    $('.bookmarks').on('change', '.reassignRating', function(){
+      let ratingValue = $(this).closest('.container').find('.reassignRating').val();
       let bookmarkToChange = $(this).closest('.container').find('li').attr('data-item-id');
       let newData = {rating:ratingValue,};
       api.updateBookmark(bookmarkToChange,newData,function(){
@@ -113,10 +118,10 @@ let bookmarkList = (function(){
   };
 
   let editBookmarkDescription = function(){
-    $('.bookmarks').on('submit','#editBookmarkDescription',function(event){
+    $('.bookmarks').on('submit','.editBookmarkDescription',function(event){
       event.preventDefault();
       let bookmarkToChange = $(this).closest('.container').find('li').attr('data-item-id');
-      let newDesc = $(this).closest('.container').find('#editBookmarkInput').val();
+      let newDesc = $(this).closest('.container').find('.editBookmarkInput').val();
       let newData = {
         desc:newDesc
       };
@@ -148,7 +153,7 @@ let bookmarkList = (function(){
   };
 
   let addToBookmarks = function(){
-    $('.buttons').on('click','.addBookmark',function(){
+    $('.buttons').on('click','#addBookmark',function(){
       store.addingBookmark = true;
       render(store.bookmarks);
     });
@@ -211,3 +216,5 @@ let bookmarkList = (function(){
   };
 
 }());
+
+
