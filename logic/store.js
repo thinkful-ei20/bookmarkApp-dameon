@@ -4,7 +4,7 @@
 let store = (function(){
   let addingBookmark = false;
   let searchingByRating = false;
-  let ratingSetting =1;
+  let ratingSetting = 1;
   let bookmarks = [];
   let addItem = function(item) {
     this.bookmarks.push(item);

@@ -2,17 +2,22 @@
 /*global store api*/
 // eslint-disable-next-line no-unused-vars
 let bookmarkList = (function(){
- 
+ // aria-labelledby='bookmark-name'
   let generateFormElement = function(){
     return ` <form role='form' class="add-bookmark-form"  >
-       <label for="bookmark-name">Bookmark name:</label>
-       <input type="text" id="bookmark-title" aria-labelledby='bookmark-name' required><br>
-      <label for="bookmark-url">Bookmark URL:</label>
-      <input type="text" id="bookmark-url" aria-labelledby='bookmark-url' required><br>
-       <label for="bookmark-rating">Rate your bookmark:</label>
-      <input type="number" id="rating" min="1" max="5" aria-labelledby='bookmark-rating' required><br>
-       <label for="bookmark-description">Bookmark description:</label>
-       <input type="text" id="description" aria-labelledby='bookmark-description' required><br>
+       
+       <label for="bookmark-title">Bookmark name:</label>
+       <input type="text" id="bookmark-title"  required minlength="5"><br>
+      
+       <label for="bookmark-url">URL in the format of http://</label>
+       <input type="text" id="bookmark-url"  required pattern='http://.*'><br>
+       
+       <label for="rating">Rate your bookmark:</label>
+       <input type="number" id="rating" min="1" max="5"  required><br>
+      
+       <label for="description">Bookmark description:</label>
+       <input type="text" id="description" required ><br>
+      
        <button type="submit" id="add-bookmark-button" >ADD</button>
      </form>`;
   };
@@ -20,6 +25,7 @@ let bookmarkList = (function(){
   let generateBookmarkElement = function(bookmark){
     return `  
     <div class = 'container'>
+    <ul>
       <li data-item-id="${bookmark.id}">         
         <h2 class="js-title">${bookmark.title} </h2> 
         <div class = 'rating'>
@@ -37,10 +43,17 @@ let bookmarkList = (function(){
           <button class = 'expandButton' type='button'>More Info</button>
         </div> 
         <div class ='expandedInfo hidden'>
-          <form id="editBookmarkDescription">
-            <input type="text" id="editBookmarkInput" value="${bookmark.desc}" />
-          </form>
-         <a href =${bookmark.url} target = 'blank'>${bookmark.url}</a> 
+          <form id="editBookmarkDescription" role='textbox'>
+            
+            <label for='editBookmarkInput'>Edit Description</label>
+            <textarea rows='3' col='auto' type="text" id="editBookmarkInput" placeholder="${bookmark.desc}" required minlength='1' " />
+            
+            <button type='submit'>Change Description</button>
+          </form><br><br><br><br>
+          <span role="link">
+          <a href =${bookmark.url} target = 'blank'>${bookmark.url}</a>
+          </span>
+          </ul>
         </div>    
       </li>
     
@@ -56,7 +69,7 @@ let bookmarkList = (function(){
   let buttonString = function(){
     return `<button class="addBookmark" id="sortBookmarks">Add to Bookmarks</button>
       <select id ='ratingSort' class='sortBookmarks' aria-labelledby='sortBookmarks'>
-      <option value="">Sort by Rating</option>
+      <option value="">Filter by Rating</option>
       <option value="1">Minimum rating : 1</option>
       <option value="2">Minimum rating : 2</option>
       <option value="3">Minimum rating : 3</option>
@@ -64,6 +77,13 @@ let bookmarkList = (function(){
       <option value="5">Minimum rating : 5</option>
       </select>
       </div>`;};
+
+  function errorLogging(jqXHR, status, err) {
+    console.log(jqXHR.responseJSON.message);
+    console.log(status);
+    console.log(err);
+    console.log(jqXHR);
+  }
 
   let ratingToSearchFor = function(){
     $('.buttons').on('change', '#ratingSort', function(){
@@ -80,16 +100,14 @@ let bookmarkList = (function(){
   let changeCurrentRating = function(){
     $('.bookmarks').on('change', '#reassignValue', function(){
       let ratingValue = $(this).closest('.container').find('#reassignValue').val();
-      let newData = {
-        rating:ratingValue,
-      };
       let bookmarkToChange = $(this).closest('.container').find('li').attr('data-item-id');
+      let newData = {rating:ratingValue,};
       api.updateBookmark(bookmarkToChange,newData,function(){
         store.bookmarks = [];
         api.getItems((items) => {
           items.forEach((item) => store.addItem(item));
           bookmarkList.render(store.bookmarks);
-        });
+        },errorLogging);
       });
     });
   };
@@ -98,8 +116,6 @@ let bookmarkList = (function(){
     $('.bookmarks').on('submit','#editBookmarkDescription',function(event){
       event.preventDefault();
       let bookmarkToChange = $(this).closest('.container').find('li').attr('data-item-id');
-      //let indexOfBookmark = findIndexOfElement(bookmarkToChange);
-      //store.bookmarks[indexOfBookmark].description = 'newString';
       let newDesc = $(this).closest('.container').find('#editBookmarkInput').val();
       let newData = {
         desc:newDesc
@@ -110,14 +126,17 @@ let bookmarkList = (function(){
           items.forEach((item) => store.addItem(item));
           bookmarkList.render(store.bookmarks);
         });
-      });
+      },errorLogging);
     });
   };
   
   let render = function(bookmarks){
     
+    if (bookmarks === undefined){
+      bookmarks =store.bookmarks;
+    }
     let bookmarkString = generateBookmarkString(bookmarks);
-    //if(this.item is expanded){};
+    
 
 
     if (!store.addingBookmark){
@@ -130,7 +149,6 @@ let bookmarkList = (function(){
 
   let addToBookmarks = function(){
     $('.buttons').on('click','.addBookmark',function(){
-      console.log('hi');
       store.addingBookmark = true;
       render(store.bookmarks);
     });
@@ -144,15 +162,12 @@ let bookmarkList = (function(){
       let bookmarkRating = $('#rating').val();
       let bookmarkDescription = $('#description').val();
       let newBookmark = store.createBookmark(bookmarkTitle,bookmarkDescription,bookmarkRating,bookmarkLink);
-      console.log(newBookmark);
       api.createBookmark(newBookmark,function(newItem){
         store.addItem(newItem);
-        render(store.bookmarks);
-      });
-      //store.bookmarks.push(store.createBookmark(bookmarkTitle,bookmarkDescription,bookmarkRating,bookmarkLink));
+        render();
+        //render(store.bookmarks);
+      },errorLogging);
       store.addingBookmark=false;
-      //render(store.bookmarks);
-      console.log(bookmarkDescription);
     });
   };
 
@@ -165,11 +180,7 @@ let bookmarkList = (function(){
       //.closest('li').toggleClass('normal'));
     });
   };
-  
-  let findIndexOfElement = function(title){
-    return store.bookmarks.map(item => item.title).indexOf(title); 
-  };
-
+    
   let deleteBookmark = function(){
     $('.bookmarks').on('click','.deleteButton',function(){
       let itemToDelete = $(this).closest('.container').find('li').attr('data-item-id');

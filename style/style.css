@@ -72,9 +72,15 @@ label , input {
  margin : 5px;
 }
 
-#editBookmarkDescription >input {
+textarea {
+  width:auto;
+}
+
+
+#editBookmarkDescription  {
   height : 50px;
-  width : 280px;
+  border:none;
+  width : auto;
 }
 
 
