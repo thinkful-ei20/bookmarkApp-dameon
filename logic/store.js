@@ -16,7 +16,7 @@ let store = (function(){
       desc,
       rating,
       url,
-      //expanded:false
+      expanded:false
     };
   };
   return {

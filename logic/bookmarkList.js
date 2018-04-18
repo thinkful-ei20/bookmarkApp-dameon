@@ -2,7 +2,7 @@
 /*global store api*/
 // eslint-disable-next-line no-unused-vars
 let bookmarkList = (function(){
- // aria-labelledby='bookmark-name'
+ 
   let generateFormElement = function(){
     return ` <form role='form' class="add-bookmark-form"  >
        
@@ -60,7 +60,34 @@ let bookmarkList = (function(){
     </div>
     `;
   };
-  
+ 
+  // let generateBookmarkElement = function(bookmark){
+  //   return `  
+  //   <div class = 'container'>
+  //   <ul>
+  //     <li data-item-id="${bookmark.id}">         
+  //       <h2 class="js-title">${bookmark.title} </h2> 
+  //       <div class = 'rating'>
+  //         <p>Your Rating : ${bookmark.rating}</p>
+  //         <select  class= 'reassignRating' id ='${bookmark.id}' aria-label='reassignValue' >
+  //         <label title='change rating' aria-label='reassignValue'></label>
+  //         <option value="">Reassign rating</option>
+  //         <option value="1">Reassign rating : 1</option>
+  //         <option value="2">Reassign rating : 2</option>
+  //         <option value="3">Reassign rating : 3</option>
+  //         <option value="4">Reassign rating : 4</option>
+  //         <option value="5">Reassign rating : 5</option>
+  //         </select>
+  //         <button class = 'deleteButton' type='button'>Delete</button>
+  //         <button class = 'expandButton' type='button'>More Info</button>
+  //       </div> 
+  //      </li>
+    
+  //   </div>
+  //   `;
+  // };
+
+
   function generateBookmarkString(bookmarkList) {    
     let items = bookmarkList.map((item) => generateBookmarkElement(item));
     return items.join('');
@@ -90,15 +117,9 @@ let bookmarkList = (function(){
 
   let ratingToSearchFor = function(){
     $('.buttons').on('change', '#ratingFilter', function(){
-      
-      
-      let ratingValue =  $('#ratingFilter').val();
-      store.ratingSetting = parseInt(ratingValue);
-      let bookmarks =  store.bookmarks.filter(function(item){
-        return item.rating >= parseInt(ratingValue);
-      });
-      console.log(ratingValue);
-      render(bookmarks);
+      store.searchingByRating = true;
+      store.ratingSetting = parseInt($('#ratingFilter').val());
+      render();
     });
   };
  
@@ -135,21 +156,63 @@ let bookmarkList = (function(){
     });
   };
   
-  let render = function(bookmarks){
-    
-    if (bookmarks === undefined){
-      bookmarks =store.bookmarks;
-    }
+  let render = function(){
+    (!store.addingBookmark) ? $('.buttons').html(buttonString) : $('.buttons').html(generateFormElement);
+    //let bookmarks = store.bookmarks;
+    let bookmarks =  store.bookmarks.filter(function(item){
+      return item.rating >= store.ratingSetting;});
+
+    console.log(bookmarks);
     let bookmarkString = generateBookmarkString(bookmarks);
-    
-
-
-    if (!store.addingBookmark){
-      $('.buttons').html(buttonString);
-    } else {
-      $('.buttons').html(generateFormElement);
-    }
     $('.bookmarks').html(bookmarkString);
+
+
+    //array of bookmarks . then for each bookmark get a string based on whether or not it's expanded'
+
+
+    // let bookmarks = store.bookmarks;
+    
+    // if (store.searchingByRating){
+    //   let bookmarksFilteredByRating = store.bookmarks.filter(function(item){
+    //     return item.rating >= store.rating;});
+    //     console.log(bookmarksFilteredByRating);
+    //   let bookmarkString = generateBookmarkElement(bookmarksFilteredByRating);
+    //   $('.bookmarks').html(bookmarkString);
+    // } else {
+
+    // let bookmarkString = generateBookmarkString(store.bookmarks);
+    // $('.bookmarks').html(bookmarkString);
+    // }
+
+    // let bookmarks =store.bookmarks.filter(function(item){
+    //       return item.rating = store.rating;});
+   
+    //parseInt(ratingValue);
+    
+    
+    // if (store.searchingByRating){
+    //   bookmarks = store.bookmarks.filter(function(item){
+    //     return item.rating = store.rating;});
+    // }
+    
+    //creating different states of the DOM
+    //default
+    //adding bookmark
+    //search by rating
+    //bookmark expanded
+
+    // if (store.searchingByRating) {
+    //   if (!store.addingBookmark){$('.buttons').html(buttonString);} else {$('.buttons').html(generateFormElement);}
+    //   $('.bookmarks').html(bookmarkString);
+    // }
+    
+    
+    //let bookmarksToRender = bookmarks;
+    // if (bookmarksToRender.length === 0){bookmarks = store.bookmarks;}
+   
+    
+    
+  
   };
 
   let addToBookmarks = function(){
@@ -185,7 +248,41 @@ let bookmarkList = (function(){
       //.closest('li').toggleClass('normal'));
     });
   };
-    
+   
+  
+  // let testHandler = function(){
+
+  //   $('h1').on('click',function(){
+
+  //     console.log('hi');
+  //     let cheese = [{title:'first',rating:true},{title:'second',rating:false}];
+      
+      
+  //       let test = [];
+  //       for(let i = 0; i <cheese.length;i++){
+
+  //       if(.expanded === true){
+  //         test.push(generateBookmarkElement(cheese[i]));
+  //       } else {test.push(generateBookmarkElementNormal(cheese[i]));}
+  //     } 
+  //     console.log(test);
+  //   });
+        
+  //     };
+      
+
+
+
+
+
+   
+  
+
+
+
+
+
+
   let deleteBookmark = function(){
     $('.bookmarks').on('click','.deleteButton',function(){
       let itemToDelete = $(this).closest('.container').find('li').attr('data-item-id');
@@ -200,6 +297,7 @@ let bookmarkList = (function(){
     });
   };
   function bindEventHandlers(){
+    //testHandler();
     editBookmarkDescription();
     changeCurrentRating();
     ratingToSearchFor();
@@ -209,6 +307,14 @@ let bookmarkList = (function(){
     formSubmitHandler();
   }
 
+
+
+ 
+
+
+
+
+  
   return {
     bindEventHandlers,
     render,

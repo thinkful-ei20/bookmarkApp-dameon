@@ -6,7 +6,7 @@ $(document).ready(function() {
   bookmarkList.bindEventHandlers();
   api.getItems((items) => {
     items.forEach((item) => store.addItem(item));
-    bookmarkList.render(store.bookmarks);
+    bookmarkList.render();
   });
 });
 
