@@ -4,7 +4,7 @@
 let bookmarkList = (function(){
  
   let generateFormElement = function(){
-    return ` <form role='form' class="add-bookmark-form"  >
+    return ` <form role='form' class="add-bookmark-form" aria-live="polite" >
        
        <label for="bookmark-title">Bookmark name:</label>
        <input type="text" id="bookmark-title"  required minlength="5"><br>
@@ -24,11 +24,12 @@ let bookmarkList = (function(){
 
   let generateBookmarkElement = function(bookmark){
     return `  
-    <div class = 'container'>
+    <div class = 'container' aria-live="polite">
     <ul>
       <li data-item-id="${bookmark.id}">         
         <h2 class="js-title">${bookmark.title} </h2> 
         <div class = 'rating'>
+        <form>
           <p>Your Rating : ${bookmark.rating}</p>
           <select  class= 'reassignRating' id ='${bookmark.id}' aria-label='reassignValue' >
           <label title='change rating' aria-label='reassignValue'></label>
@@ -39,10 +40,12 @@ let bookmarkList = (function(){
           <option value="4">Reassign rating : 4</option>
           <option value="5">Reassign rating : 5</option>
           </select>
+         
           <button class = 'deleteButton' type='button'>Delete</button>
           <button class = 'expandButton' type='button'>More Info</button>
+          </form>
         </div> 
-        <div class ='expandedInfo hidden'>
+        <div class ='expandedInfo ${(bookmark.expanded) ?  '' : 'hidden' }'>
           <form class="editBookmarkDescription" role='textbox'>
             
             <label for='editBookmarkDescription'>Edit Description</label>
@@ -60,32 +63,7 @@ let bookmarkList = (function(){
     </div>
     `;
   };
- 
-  // let generateBookmarkElement = function(bookmark){
-  //   return `  
-  //   <div class = 'container'>
-  //   <ul>
-  //     <li data-item-id="${bookmark.id}">         
-  //       <h2 class="js-title">${bookmark.title} </h2> 
-  //       <div class = 'rating'>
-  //         <p>Your Rating : ${bookmark.rating}</p>
-  //         <select  class= 'reassignRating' id ='${bookmark.id}' aria-label='reassignValue' >
-  //         <label title='change rating' aria-label='reassignValue'></label>
-  //         <option value="">Reassign rating</option>
-  //         <option value="1">Reassign rating : 1</option>
-  //         <option value="2">Reassign rating : 2</option>
-  //         <option value="3">Reassign rating : 3</option>
-  //         <option value="4">Reassign rating : 4</option>
-  //         <option value="5">Reassign rating : 5</option>
-  //         </select>
-  //         <button class = 'deleteButton' type='button'>Delete</button>
-  //         <button class = 'expandButton' type='button'>More Info</button>
-  //       </div> 
-  //      </li>
-    
-  //   </div>
-  //   `;
-  // };
+
 
 
   function generateBookmarkString(bookmarkList) {    
@@ -96,10 +74,10 @@ let bookmarkList = (function(){
   let buttonString = function(){
     return `
       
-      <button class="addBookmark" id="addBookmark">Add to Bookmarks</button>
+      <button class="addBookmark" id="addBookmark" aria-live="polite">Add to Bookmarks</button>
       
-      <select id ='ratingFilter' class='sortBookmarks' aria-labelledby='ratingFilter'>
-        <option value="">Filter by Rating</option>
+      <select id ='ratingFilter' class='sortBookmarks' aria-labelledby='ratingFilter' >
+      <option disabled selected>Filter by Rating</option>
         <option value="1">Minimum rating : 1</option>
         <option value="2">Minimum rating : 2</option>
         <option value="3">Minimum rating : 3</option>
@@ -230,8 +208,10 @@ let bookmarkList = (function(){
       let bookmarkRating = $('#rating').val();
       let bookmarkDescription = $('#description').val();
       let newBookmark = store.createBookmark(bookmarkTitle,bookmarkDescription,bookmarkRating,bookmarkLink);
-      api.createBookmark(newBookmark,function(newItem){
-        store.addItem(newItem);
+      api.createBookmark(newBookmark,function(item){
+        let bookmark =store.createBookmark(item.title,item.desc,item.rating,item.url,item.id);
+        
+        store.addItem(bookmark);
         render();
         //render(store.bookmarks);
       },errorLogging);
@@ -241,34 +221,19 @@ let bookmarkList = (function(){
 
   let expandElementHandler = function(){
     $('.bookmarks').on('click','.expandButton',function(){
-    
-      
-      $(this).closest('.container').find('.expandedInfo').toggleClass('hidden');
-      $(this).closest('.container').find('li').toggleClass('normal');
-      //.closest('li').toggleClass('normal'));
-    });
-  };
+      console.log($(this).closest('.container').find('li').attr('data-item-id'));
+    });};
+          //   changes this expanded property in the store
+          // then render function
+
+
+  //     $(this).closest('.container').find('.expandedInfo').toggleClass('hidden');
+  //     $(this).closest('.container').find('li').toggleClass('normal');
+  //     //.closest('li').toggleClass('normal'));
+  //   });
+  // };
    
   
-  // let testHandler = function(){
-
-  //   $('h1').on('click',function(){
-
-  //     console.log('hi');
-  //     let cheese = [{title:'first',rating:true},{title:'second',rating:false}];
-      
-      
-  //       let test = [];
-  //       for(let i = 0; i <cheese.length;i++){
-
-  //       if(.expanded === true){
-  //         test.push(generateBookmarkElement(cheese[i]));
-  //       } else {test.push(generateBookmarkElementNormal(cheese[i]));}
-  //     } 
-  //     console.log(test);
-  //   });
-        
-  //     };
       
 
 
