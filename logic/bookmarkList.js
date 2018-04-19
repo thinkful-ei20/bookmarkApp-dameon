@@ -28,7 +28,7 @@ let bookmarkList = (function(){
       <ul>
         <li data-item-id="${bookmark.id}">         
           <h2 class="js-title">${bookmark.title} </h2> 
-            <form id='bookmarkDescription'>
+            <form role= 'form'>
               <p>Your Rating : ${bookmark.rating}</p>
                 
                   <select  class= 'reassignRating' id ='${bookmark.id}' aria-label='reassignValue' >

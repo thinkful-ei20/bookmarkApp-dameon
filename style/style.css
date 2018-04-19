@@ -61,9 +61,9 @@ form {
 }
 footer {
   border-top-style:solid;
-   border-width:7px;
+  border-width:7px;
   text-align:center;
-  border-color:#4aaaa5;
+  border-color:azure;
   max-height:30px;
   background-color:#666666;
   color:white;
@@ -73,9 +73,7 @@ footer {
   bottom:0;
  
  }
- .ratingFilter {
-   background-color: blue;
- }
+ 
 
   .reassignRating{
     display: inline-block;
