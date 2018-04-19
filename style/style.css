@@ -1,11 +1,120 @@
-* {
+ * {
   box-sizing: border-box;
 }
-
+.hidden {
+  display: none;
+}
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family:  'Arial', Times, serif, sans-serif;
+  background-color: #DFE4FF;
+  margin-bottom: 30px;
  
 }
+.heading {   
+  width: 80%;
+  margin: 20px auto;
+  text-align: center;
+  }
+
+h1 {
+  font-size:  2.5em;
+}
+
+h2 { 
+  font-size : 1.5em;
+  padding: 10px;
+}
+
+label {
+  margin:2px;
+}
+.buttons {
+  display: flex;
+  margin: 10px;
+  align-items: center;
+  justify-content: center;
+}
+#addBookmarkForm {
+  border: black solid 2px;
+  border-radius: 3px;
+}
+label,input{
+  margin: 2px;
+  padding: 2px;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start ;
+  background-color: azure;
+  padding: 5px;
+}
+.container {
+  border: solid black 2px;
+  width : 60%;
+  margin: 10px auto;
+  border-radius : 5px;
+ 
+}
+.addBookmark {
+  margin: 0 10px;
+}
+footer {
+  border-top-style:solid;
+   border-width:7px;
+  text-align:center;
+  border-color:#4aaaa5;
+  max-height:30px;
+  background-color:#666666;
+  color:white;
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+ 
+ }
+ .ratingFilter {
+   background-color: blue;
+ }
+
+  .reassignRating{
+    display: inline-block;
+    
+  }
+
+  .js-title {
+    background-color: #eee;
+    text-align:center;
+    
+  }
+  span {
+    padding : 5px;
+    text-align:center;
+    }
+.rating{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 10px 5px 0 0;
+}
+.expandedInformation {
+  background-color: azure;
+}
+a {
+  text-decoration: none;
+  color:black;
+}
+a:hover{
+  text-decoration: underline;
+}
+.deleteButton{
+  margin: 0 2px 0 0;
+}
+ .button {
+    margin: 2px 0;
+  }
+/*
+
 
 .heading { 
   height:100px;
@@ -15,19 +124,12 @@ body {
   font-size: 50px;
  }
 
-.container {
-  border: solid black 2px;
-  width : 60%;
-  margin: 5px auto;
-  border-radius : 5px;
- 
-  
-}
+
 
 h3 {
   font-size:24px;
 }
-.addBookmark , .sortBookmarks {
+ , {
   width: 30%;
   height: 80px;
   border: solid black 2px;
@@ -44,21 +146,20 @@ h3 {
   border-radius : 5px;
 }
 
-form {
+.add-bookmark-form {
   border: solid black 2px;
   border-radius : 2px;
 }
-
-.normal {
+*/
+/* .normal {
   height : auto;
   width : 80%;
   margin:8px auto;
   
-}
+} */
 
-.hidden {
-  display:none;
-}
+
+/*
 h1 {
   margin: 25px;
   background-color:#8614ff
@@ -81,26 +182,26 @@ textarea {
   height : 50px;
   border:none;
   width : auto;
-}
-
+} */
+/* 
 
 @media only screen and (min-width: 460px) {
-  .addBookmark , .sortBookmarks {
+  .addBookmark ,  {
     margin: 0 20px 0 35px;
   }
 }
 @media only screen and (min-width: 600px) {
-  .addBookmark , .sortBookmarks {
+  .addBookmark ,  {
     margin: 0 20px 0 45px;
   }
 }
 @media only screen and (min-width: 740px) {
-  .addBookmark , .sortBookmarks {
+  .addBookmark ,  {
     margin: 0 20px 0 55px;
   }
 }
 @media only screen and (min-width: 860px) {
-  .addBookmark , .sortBookmarks {
+  .addBookmark , {
     margin: 0 20px 0 75px;
   } 
-}
+} */
