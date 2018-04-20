@@ -108,12 +108,7 @@ let bookmarkList = (function(){
         store.bookmarks = [];
         api.getItems((items) => {
           let bookmark = items.map((item) =>store.addItem(store.createBookmark(item.title,item.desc,item.rating,item.url,item.id)));
-          console.log(bookmark);
-          
-          
           render();
-
-
         },errorLogging);
       });
     });
@@ -126,7 +121,6 @@ let bookmarkList = (function(){
       let newDescription = $(this).closest('.container').find('.editBookmarkInput').val();
       let newData = {desc:newDescription};
       api.updateBookmark(bookmarkToChange,newData,function(){
-        //might need changed
         store.bookmarks = [];
         api.getItems((items) => {
           items.forEach((item) => store.addItem(item));
