@@ -9,7 +9,7 @@ let api = (function(){
   };
   
   
-  let createBookmark = function(newBookmark, success, error){
+  let createBookmark = function(newBookmark, success,error){
     let newItem = JSON.stringify(newBookmark);
 
     $.ajax({
@@ -22,7 +22,7 @@ let api = (function(){
     }); 
   };
 
-  let updateBookmark = function(id,updateData,callback){
+  let updateBookmark = function(id,updateData,callback,error){
     let newData = JSON.stringify(updateData);
     $.ajax({
       url: `${URL}/${id}`,
@@ -30,7 +30,7 @@ let api = (function(){
       contentType: 'application/json',
       data: newData,
       success: callback,
-      //error: error,
+      error: error,
     }); 
 
   };
@@ -43,6 +43,7 @@ let api = (function(){
     });
   };
 
+  
 
   return {
     getItems,

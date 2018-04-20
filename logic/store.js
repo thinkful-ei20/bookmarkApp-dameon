@@ -4,19 +4,19 @@
 let store = (function(){
   let addingBookmark = false;
   let searchingByRating = false;
-  let ratingSetting =1;
+  let ratingSetting = 1;
   let bookmarks = [];
   let addItem = function(item) {
     this.bookmarks.push(item);
   };
-
-  let createBookmark = function(title,desc,rating,url){
+  let createBookmark = function(title,desc,rating,url,id){
     return {
       title,
       desc,
       rating,
       url,
-      //expanded:false
+      id,
+      expanded:false
     };
   };
   return {
@@ -25,7 +25,6 @@ let store = (function(){
     searchingByRating,
     ratingSetting,
     addItem,
-    
     createBookmark,
   };
 }());
