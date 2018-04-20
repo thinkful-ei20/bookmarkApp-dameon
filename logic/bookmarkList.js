@@ -31,7 +31,7 @@ let bookmarkList = (function(){
             <form role= 'form'>
               <p>Your Rating : ${bookmark.rating}</p>
                 
-                  <select  class= 'reassignRating' id ='${bookmark.id}' aria-label='reassignValue' >
+                  <select  role='button' class= 'reassignRating' id ='${bookmark.id}' aria-label='reassignValue' >
                     <label title='change rating' aria-label='reassignValue'></label>
                       <option value="">Reassign rating</option>
                       <option value="1">Reassign rating : 1</option>
@@ -61,25 +61,24 @@ let bookmarkList = (function(){
     </div>`;
   };
 
-  function generateBookmarkString(bookmarkList) {    
-    let items = bookmarkList.map((item) => generateBookmarkElement(item));
-    return items.join('');
-  }
-
   let buttonString = function(){
-    return `
-      
+    return `      
       <button class="addBookmark" id="addBookmark" aria-live="polite">Add to Bookmarks</button>
       
-      <select id ='ratingFilter' aria-labelledby='ratingFilter' class='ratingFilter'>
+      <select role='button' id ='ratingFilter' aria-label='rating filter' class='ratingFilter' aria-live="polite">Filter by Rating
       <option disabled selected>Ratings of at Least</option>
         <option value="1">Minimum rating : 1</option>
         <option value="2">Minimum rating : 2</option>
         <option value="3">Minimum rating : 3</option>
         <option value="4">Minimum rating : 4</option>
         <option value="5">Minimum rating : 5</option>
-      </select>
-      `;};
+      </select>`;
+  };
+
+  function generateBookmarkString(bookmarkList) {    
+    let items = bookmarkList.map((item) => generateBookmarkElement(item));
+    return items.join('');
+  }
 
   function errorLogging(jqXHR, status, err) {
     console.log(jqXHR.responseJSON.message);
@@ -105,13 +104,16 @@ let bookmarkList = (function(){
       // capture current expanded 
       // after it updates and getItems adds reassigns current expanded
 
-
-
       api.updateBookmark(bookmarkToChange,newData,function(){
         store.bookmarks = [];
         api.getItems((items) => {
-          items.forEach((item) => store.addItem(item));
+          let bookmark = items.map((item) =>store.addItem(store.createBookmark(item.title,item.desc,item.rating,item.url,item.id)));
+          console.log(bookmark);
+          
+          
           render();
+
+
         },errorLogging);
       });
     });
@@ -121,11 +123,10 @@ let bookmarkList = (function(){
     $('.bookmarks').on('submit','.editBookmarkDescription',function(event){
       event.preventDefault();
       let bookmarkToChange = $(this).closest('.container').find('li').attr('data-item-id');
-      let newDesc = $(this).closest('.container').find('.editBookmarkInput').val();
-      let newData = {
-        desc:newDesc
-      };
+      let newDescription = $(this).closest('.container').find('.editBookmarkInput').val();
+      let newData = {desc:newDescription};
       api.updateBookmark(bookmarkToChange,newData,function(){
+        //might need changed
         store.bookmarks = [];
         api.getItems((items) => {
           items.forEach((item) => store.addItem(item));
@@ -160,7 +161,6 @@ let bookmarkList = (function(){
       let newBookmark = store.createBookmark(bookmarkTitle,bookmarkDescription,bookmarkRating,bookmarkLink);
       api.createBookmark(newBookmark,function(item){
         let bookmark =store.createBookmark(item.title,item.desc,item.rating,item.url,item.id);
-        
         store.addItem(bookmark);
         render();
       },errorLogging);
@@ -188,12 +188,11 @@ let bookmarkList = (function(){
           items.forEach((item) => store.addItem(item));
           bookmarkList.render(store.bookmarks);
         });   
-     
       });
     });
   };
+  
   function bindEventHandlers(){
-    //testHandler();
     editBookmarkDescription();
     changeCurrentRating();
     ratingToSearchFor();
@@ -202,19 +201,10 @@ let bookmarkList = (function(){
     addToBookmarks();
     formSubmitHandler();
   }
-
-
-
- 
-
-
-
-
   
   return {
     bindEventHandlers,
     render,
-   
   };
 
 }());

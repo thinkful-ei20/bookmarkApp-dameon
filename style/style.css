@@ -1,20 +1,13 @@
- * {
+
+* {
   box-sizing: border-box;
 }
-.hidden {
-  display: none;
-}
+
 body {
   font-family:  'Arial', Times, serif, sans-serif;
   background-color: #DFE4FF;
   margin-bottom: 30px;
- 
 }
-.heading {   
-  width: 80%;
-  margin: 20px auto;
-  text-align: center;
-  }
 
 h1 {
   font-size:  2.5em;
@@ -28,20 +21,12 @@ h2 {
 label {
   margin:2px;
 }
-.buttons {
-  display: flex;
-  margin: 10px;
-  align-items: center;
-  justify-content: center;
-}
-#addBookmarkForm {
-  border: black solid 2px;
-  border-radius: 3px;
-}
+
 label,input{
   margin: 2px;
   padding: 2px;
 }
+
 form {
   display: flex;
   flex-direction: column;
@@ -49,16 +34,7 @@ form {
   background-color: azure;
   padding: 5px;
 }
-.container {
-  border: solid black 2px;
-  width : 60%;
-  margin: 10px auto;
-  border-radius : 5px;
- 
-}
-.addBookmark {
-  margin: 0 10px;
-}
+
 footer {
   border-top-style:solid;
   border-width:7px;
@@ -71,135 +47,78 @@ footer {
   left:0;
   right:0;
   bottom:0;
- 
- }
- 
+}
 
-  .reassignRating{
-    display: inline-block;
-    
-  }
+a {
+  text-decoration: none;
+  color:black;
+}
 
-  .js-title {
-    background-color: #eee;
-    text-align:center;
-    
-  }
-  span {
-    padding : 5px;
-    text-align:center;
-    }
-.rating{
+a:hover {
+  text-decoration: underline;
+}
+
+span {
+  padding : 5px;
+  text-align:center;
+}
+
+.heading {   
+  width: 80%;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+  
+.buttons {
+  display: flex;
+  margin: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+#addBookmarkForm {
+  border: black solid 2px;
+  border-radius: 3px;
+  margin: 0 10px;
+}
+
+.container {
+  border: solid black 2px;
+  width : 60%;
+  margin: 10px auto;
+  border-radius : 5px;
+}
+.reassignRating {
+  display: inline-block;
+}
+
+.js-title {
+  background-color: #eee;
+  text-align:center;
+}
+ 
+.rating {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   padding: 10px 5px 0 0;
 }
+
 .expandedInformation {
   background-color: azure;
 }
-a {
-  text-decoration: none;
-  color:black;
-}
-a:hover{
-  text-decoration: underline;
-}
-.deleteButton{
+
+.deleteButton {
   margin: 0 2px 0 0;
 }
- .button {
-    margin: 2px 0;
-  }
-/*
 
-
-.heading { 
-  height:100px;
-  width: 90%;
-  margin:10px auto;
-  text-align: center;
-  font-size: 50px;
- }
-
-
-
-h3 {
-  font-size:24px;
+.button {
+  margin: 2px 0;
 }
- , {
-  width: 30%;
-  height: 80px;
-  border: solid black 2px;
-  display:inline-block;
-  margin: 0 15px 0 25px;
-  border-radius : 5px;
-  font-size: 20px;
-  
+.addBookmark {
+  margin: 0 3px 0 0;
 }
-
-.buttons {
-  margin: 0 auto;
-  width: 80%;
-  border-radius : 5px;
-}
-
-.add-bookmark-form {
-  border: solid black 2px;
-  border-radius : 2px;
-}
-*/
-/* .normal {
-  height : auto;
-  width : 80%;
-  margin:8px auto;
-  
-} */
-
-
-/*
-h1 {
-  margin: 25px;
-  background-color:#8614ff
-}
-.bookmarks {
-  margin:20px;
-  border-radius : 5px;
-}
-
-label , input {
- margin : 5px;
-}
-
-textarea {
-  width:auto;
-}
-
-
-#editBookmarkDescription  {
-  height : 50px;
-  border:none;
-  width : auto;
-} */
-/* 
-
-@media only screen and (min-width: 460px) {
-  .addBookmark ,  {
-    margin: 0 20px 0 35px;
-  }
-}
-@media only screen and (min-width: 600px) {
-  .addBookmark ,  {
-    margin: 0 20px 0 45px;
-  }
-}
-@media only screen and (min-width: 740px) {
-  .addBookmark ,  {
-    margin: 0 20px 0 55px;
-  }
-}
-@media only screen and (min-width: 860px) {
-  .addBookmark , {
-    margin: 0 20px 0 75px;
-  } 
-} */

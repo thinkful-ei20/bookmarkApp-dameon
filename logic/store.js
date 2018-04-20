@@ -6,11 +6,9 @@ let store = (function(){
   let searchingByRating = false;
   let ratingSetting = 1;
   let bookmarks = [];
- 
   let addItem = function(item) {
     this.bookmarks.push(item);
   };
-
   let createBookmark = function(title,desc,rating,url,id){
     return {
       title,
@@ -27,7 +25,6 @@ let store = (function(){
     searchingByRating,
     ratingSetting,
     addItem,
-    
     createBookmark,
   };
 }());
